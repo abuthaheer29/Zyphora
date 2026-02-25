@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universec • Games</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🔥 Animated Glow Layer */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
+            filter: blur(60px);
+            animation: cosmicMove 12s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes cosmicMove {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(30px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(30px) translateX(-25px) scale(1);
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(176, 38, 255, 0.3);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            color: #b026ff;
+            text-shadow: 0 0 15px #b026ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links a:hover {
+            color: #b026ff;
+        }
+
+        .container {
+            padding: 120px 10%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #b026ff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #b026ff;
+        }
+
+        .game-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .game-nav button {
+            background: none;
+            border: 1px solid #b026ff;
+            color: #b026ff;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .game-nav button.active,
+        .game-nav button:hover {
+            background: #b026ff;
+            color: black;
+        }
+
+        .scoreboard {
+            margin-bottom: 20px;
+            color: #b026ff;
+        }
+
+        .grid {
+            display: grid;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #memoryGame {
+            grid-template-columns: repeat(4, 100px);
+        }
+
+        #tictactoeGame {
+            grid-template-columns: repeat(3, 100px);
+        }
+
+        .tile {
+            width: 100px;
+            height: 100px;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            /* 🔥 RUMMY BACKSIDE LOOK */
+            background:
+                repeating-linear-gradient(45deg,
+                    #5a189a,
+                    #5a189a 10px,
+                    #7b2cbf 10px,
+                    #7b2cbf 20px);
+
+            box-shadow:
+                inset 0 0 10px rgba(255, 255, 255, 0.15),
+                0 6px 15px rgba(0, 0, 0, 0.6);
+
+            transition: 0.3s;
+        }
+
+        /* 🔥 Card shine layer */
+        .tile::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+
+            background: linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.25),
+                    transparent 35%);
+        }
+
+        /* 🔥 Hover glow */
+        .tile:hover {
+            transform: translateY(-4px) scale(1.05);
+
+            box-shadow:
+                inset 0 0 12px rgba(255, 255, 255, 0.25),
+                0 0 18px #b026ff;
+        }
+
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hidden img {
+            opacity: 0;
+        }
+
+        .tile-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #000000;
+            height: 100%;
+        }
+
+        .quiz-box {
+            max-width: 500px;
+            margin: auto;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .quiz-option {
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background: #b026ff;
+        }
+
+        .reset {
+            margin-top: 25px;
+        }
+
+        .reset button {
+            background: none;
+            border: 1px solid #b026ff;
+            color: #b026ff;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+
+        .reset button:hover {
+            background: #b026ff;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">Zyphora</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="space.html">Space</a>
+            <a href="games.html">Games</a>
+            <a href="3dd.html">3D</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1>Games Zone 🚀</h1>
+
+        <div class="game-nav">
+            <button class="active" onclick="showGame('memory',this)">Memory</button>
+            <button onclick="showGame('quiz',this)">Quiz</button>
+            <button onclick="showGame('tictactoe',this)">Tic Tac Toe</button>
+        </div>
+
+        <div class="scoreboard">
+            Score: <span id="score">0</span>
+        </div>
+
+        <div id="memoryGame" class="grid"></div>
+
+        <div id="quizGame" class="quiz-box" style="display:none;">
+            <div id="question"></div>
+            <div id="options"></div>
+        </div>
+
+        <div id="tictactoeGame" class="grid" style="display:none;"></div>
+
+        <div class="reset">
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        function showGame(game, btn) {
+
+            document.querySelectorAll('.game-nav button')
+                .forEach(b => b.classList.remove('active'));
+
+            btn.classList.add('active');
+
+            memoryGame.style.display = game === 'memory' ? 'grid' : 'none';
+            quizGame.style.display = game === 'quiz' ? 'block' : 'none';
+            tictactoeGame.style.display = game === 'tictactoe' ? 'grid' : 'none';
+
+            resetGame();
+        }
+
+        const images = [
+            "https://github.com/abuthaheer29/universec/blob/main/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/3d-rendering-planet-earth.jpg?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/fiery-planet-universe.jpg?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/mercury%20.jpg?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/neptune.jpg?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/Jupiter_OPAL_2024.png?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/planet-saturn-real.dim_512x512.png?raw=true",
+            "https://github.com/abuthaheer29/universec/blob/main/p0257vk5.jpg?raw=true"
+        ];
+
+        /* MEMORY */
+
+        let first = null;
+        let memoryScore = 0;
+
+        function loadMemory() {
+
+            memoryGame.innerHTML = '';
+            score.innerText = 0;
+
+            const cards = [...images, ...images]
+                .sort(() => Math.random() - 0.5);
+
+            cards.forEach(src => {
+
+                const tile = document.createElement('div');
+                tile.className = 'tile hidden';
+                tile.innerHTML = `<img src="${src}">`;
+
+                tile.onclick = () => flip(tile, src);
+
+                memoryGame.appendChild(tile);
+            });
+        }
+
+        function flip(tile, src) {
+
+            if (!tile.classList.contains('hidden')) return;
+
+            tile.classList.remove('hidden');
+
+            if (!first) {
+                first = { tile, src };
+                return;
+            }
+
+            if (first.src === src) {
+                memoryScore++;
+                score.innerText = memoryScore;
+                first = null;
+            } else {
+                setTimeout(() => {
+                    tile.classList.add('hidden');
+                    first.tile.classList.add('hidden');
+                    first = null;
+                }, 600);
+            }
+        }
+
+        /* QUIZ */
+
+        let qIndex = 0;
+
+        const questions = [
+
+            { q: "Red Planet?", a: ["Mars", "Venus"], c: 0 },
+            { q: "Largest Planet?", a: ["Earth", "Jupiter"], c: 1 },
+
+            { q: "Closest to Sun?", a: ["Mercury", "Mars"], c: 0 },
+            { q: "Blue Planet?", a: ["Saturn", "Earth"], c: 1 },
+
+            { q: "Ringed Planet?", a: ["Saturn", "Venus"], c: 0 },
+            { q: "Hottest Planet?", a: ["Earth", "Venus"], c: 1 },
+
+            { q: "Gas Giant?", a: ["Jupiter", "Mercury"], c: 0 },
+            { q: "Ice Giant?", a: ["Mars", "Uranus"], c: 1 },
+
+            { q: "Farthest Planet?", a: ["Neptune", "Earth"], c: 0 },
+            { q: "Planet with Life?", a: ["Mars", "Earth"], c: 1 }
+
+        ];
+
+        function loadQuiz() {
+
+            qIndex = 0;
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+
+            const data = questions[qIndex];
+            question.innerText = data.q;
+
+            options.innerHTML = '';
+
+            data.a.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerText = opt;
+                div.onclick = () => answer(i);
+                options.appendChild(div);
+            });
+        }
+
+        function answer(i) {
+
+            if (i === questions[qIndex].c) {
+                score.innerText = "Correct ✅";
+            } else {
+                score.innerText = "Wrong ❌";
+            }
+
+            qIndex++;
+
+            if (qIndex < questions.length) {
+                setTimeout(nextQuestion, 500);
+            } else {
+                setTimeout(() => {
+                    question.innerText = "Quiz Completed 🚀";
+                    options.innerHTML = "";
+                }, 500);
+            }
+        }
+
+        /* TIC TAC TOE */
+
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let player = "X";
+        let gameOver = false;
+
+        function loadTicTacToe() {
+
+            tictactoeGame.innerHTML = '';
+
+            board.forEach((val, i) => {
+
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.innerHTML = `<div class="tile-text">${val}</div>`;
+                tile.onclick = () => playMove(i);
+
+                tictactoeGame.appendChild(tile);
+            });
+        }
+
+        function playMove(i) {
+
+            if (board[i] !== "" || gameOver) return;
+
+            board[i] = player;
+
+            if (checkWinner()) {
+                score.innerText = player + " Wins 🏆";
+                gameOver = true;
+                loadTicTacToe();
+                return;
+            }
+
+            if (!board.includes("")) {
+                score.innerText = "Draw 🤝";
+                gameOver = true;
+                loadTicTacToe();
+                return;
+            }
+
+            player = player === "X" ? "O" : "X";
+
+            loadTicTacToe();
+        }
+
+        function checkWinner() {
+
+            const wins = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            return wins.some(([a, b, c]) =>
+                board[a] &&
+                board[a] === board[b] &&
+                board[a] === board[c]
+            );
+        }
+
+        function resetGame() {
+
+            first = null;
+            memoryScore = 0;
+
+            board = ["", "", "", "", "", "", "", "", ""];
+            player = "X";
+            gameOver = false;
+
+            if (memoryGame.style.display === 'grid') loadMemory();
+            else if (tictactoeGame.style.display === 'grid') loadTicTacToe();
+            else loadQuiz();
+        }
+
+        loadMemory();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Universec • 3D Solar System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+
+<style>
+
+body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+    font-family:-apple-system, sans-serif;
+}
+
+/* EXIT BUTTON */
+.exit-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:18px 40px;
+    font-size:18px;
+    color:#b026ff;
+    border:1px solid #b026ff;
+    border-radius:10px;
+    background:rgba(176,38,255,0.05);
+    cursor:pointer;
+}
+
+/* INFO BOARD */
+.board{
+    position:fixed;
+    left:20px;
+    top:100px;
+    width:220px;
+    padding:20px;
+    border-radius:12px;
+    background:rgba(77,163,255,0.15);
+    border:1px solid #4da3ff;
+    color:white;
+    z-index:1000;
+}
+
+.board h3{
+    margin-top:0;
+    color:#4da3ff;
+}
+
+canvas{
+    display:block;
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="exit-btn" onclick="exitScene()">Exit</button>
+
+<div class="board">
+    <h3>Planet Info</h3>
+    <p id="planetName">Click a planet</p>
+</div>
+
+<script>
+
+/* 🌌 SCENE */
+const scene = new THREE.Scene();
+
+/* 🎥 CAMERA */
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    2000
+);
+camera.position.set(0, 6, 60);
+
+/* 🖥 RENDERER */
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
+
+/* 💡 LIGHTING */
+scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+const sunLight = new THREE.PointLight(0xffddaa, 2.2, 500);
+scene.add(sunLight);
+
+/* ☀️ SUN */
+const sun = new THREE.Mesh(
+    new THREE.SphereGeometry(5, 64, 64),
+    new THREE.MeshStandardMaterial({
+        color:0xffcc00,
+        emissive:0xffaa00,
+        emissiveIntensity:1.3
+    })
+);
+scene.add(sun);
+
+/* ⭐ STARS */
+const starGeometry = new THREE.BufferGeometry();
+const starPositions = [];
+
+for(let i=0;i<3000;i++){
+    starPositions.push(
+        (Math.random()-0.5)*1500,
+        (Math.random()-0.5)*1500,
+        (Math.random()-0.5)*1500
+    );
+}
+
+starGeometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(starPositions,3)
+);
+
+scene.add(new THREE.Points(
+    starGeometry,
+    new THREE.PointsMaterial({
+        color:0xffffff,
+        size:1.2
+    })
+));
+
+/* 🪐 PLANETS */
+const planets = [];
+const satellites = [];
+
+function createOrbit(distance){
+
+    const orbit = new THREE.Mesh(
+        new THREE.RingGeometry(distance-0.05, distance+0.05, 128),
+        new THREE.MeshBasicMaterial({
+            color:0x444444,
+            side:THREE.DoubleSide,
+            transparent:true,
+            opacity:0.35
+        })
+    );
+
+    orbit.rotation.x = Math.PI / 2;
+    scene.add(orbit);
+}
+
+function createSatellite(parentPivot, distance){
+
+    const sat = new THREE.Mesh(
+        new THREE.SphereGeometry(0.25, 16, 16),
+        new THREE.MeshStandardMaterial({
+            color:0xaaaaaa,
+            emissive:0x333333
+        })
+    );
+
+    sat.position.x = distance;
+    parentPivot.add(sat);
+
+    satellites.push(sat);
+}
+
+function createPlanet(name, size, color, distance, speed){
+
+    createOrbit(distance);
+
+    const planet = new THREE.Mesh(
+        new THREE.SphereGeometry(size, 64, 64),
+        new THREE.MeshStandardMaterial({
+            color,
+            roughness:0.4,
+            metalness:0.2
+        })
+    );
+
+    const pivot = new THREE.Object3D();
+    scene.add(pivot);
+
+    planet.position.x = distance;
+    pivot.add(planet);
+
+    /* Satellites */
+    if(name === "Earth") createSatellite(pivot, size + 2);
+    if(name === "Jupiter") createSatellite(pivot, size + 3);
+    if(name === "Saturn") createSatellite(pivot, size + 2.5);
+
+    planet.userData = {
+        name,
+        originalColor: color
+    };
+
+    planets.push({pivot, planet, speed});
+}
+
+/* 🌍 PLANETS (MEDIUM SPEED 🔥) */
+createPlanet("Mercury", 0.8, 0xb1b1b1, 8, 0.004);
+createPlanet("Venus",   1.4, 0xffb347, 12, 0.0035);
+createPlanet("Earth",   1.6, 0x3399ff, 17, 0.003);
+createPlanet("Mars",    1.2, 0xff5533, 22, 0.0025);
+createPlanet("Jupiter", 3.2, 0xffcc88, 30, 0.0015);
+createPlanet("Saturn",  2.8, 0xffddaa, 38, 0.0012);
+createPlanet("Uranus",  2.0, 0x66ccff, 46, 0.0008);
+createPlanet("Neptune", 1.9, 0x3366ff, 54, 0.0006);
+
+/* 🎯 RAYCASTER */
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+let mouseX = 0;
+let mouseY = 0;
+
+window.addEventListener('mousemove', (event)=>{
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    mouseX = (event.clientX - window.innerWidth/2) * 0.002;
+    mouseY = (event.clientY - window.innerHeight/2) * 0.002;
+});
+
+/* 🖱 HOVER */
+window.addEventListener('mousemove', ()=>{
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(
+        planets.map(p=>p.planet)
+    );
+
+    planets.forEach(p=>{
+        p.planet.material.color.setHex(p.planet.userData.originalColor);
+    });
+
+    if(intersects.length > 0){
+        intersects[0].object.material.color.setHex(0xffffff);
+    }
+});
+
+/* 🖱 CLICK */
+window.addEventListener('click', ()=>{
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(
+        planets.map(p=>p.planet)
+    );
+
+    if(intersects.length > 0){
+        document.getElementById("planetName").innerText =
+            intersects[0].object.userData.name;
+    }
+});
+
+/* EXIT */
+function exitScene(){
+    window.history.back();
+}
+
+/* 🎥 ANIMATION */
+function animate(){
+
+    requestAnimationFrame(animate);
+
+    planets.forEach(p=>{
+        p.pivot.rotation.y += p.speed;     // Orbit
+        p.planet.rotation.y += 0.003;      // Self rotation
+    });
+
+    satellites.forEach(sat=>{
+        sat.parent.rotation.y += 0.006;    // Smooth satellite orbit
+    });
+
+    sun.rotation.y += 0.002;
+
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY + 6 - camera.position.y) * 0.05;
+
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+/* 📱 RESIZE */
+window.addEventListener('resize',()=>{
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+});
+
+</script>
+
+</body>
+</html>

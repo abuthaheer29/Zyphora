@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universec</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🔥 RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🔥 Animated Glow Layer */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
+            filter: blur(60px);
+            animation: cosmicMove 12s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes cosmicMove {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(30px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(30px) translateX(-25px) scale(1);
+            }
+        }
+
+        .enter-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 18px;
+            color: #b026ff;
+
+            border: 1px solid rgba(176, 38, 255, 0.6);
+            text-decoration: none;
+
+            border-radius: 12px;
+
+            background: rgba(176, 38, 255, 0.05);
+
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 🔥 Soft glow aura */
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(176, 38, 255, 0.25),
+                    transparent);
+
+            opacity: 0;
+            transition: 0.35s;
+        }
+
+        /* 🔥 Hover magic */
+        .enter-btn:hover {
+            background: #b026ff;
+            color: black;
+
+            box-shadow:
+                0 0 12px #b026ff,
+                0 0 25px rgba(176, 38, 255, 0.8);
+
+            transform: translateY(-3px) scale(1.03);
+        }
+
+        /* 🔥 Glow sweep */
+        .enter-btn:hover::before {
+            opacity: 1;
+            animation: glowSweep 1.2s linear infinite;
+        }
+
+        /* 🔥 Click effect */
+        .enter-btn:active {
+            transform: scale(0.97);
+        }
+
+        @keyframes glowSweep {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        /* 🌌 LOADER */
+        #loader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader-text {
+            font-size: 32px;
+            color: #b026ff;
+            text-shadow: 0 0 20px #b026ff;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ✅ NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            color: #b026ff;
+            text-shadow: 0 0 10px #b026ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #b026ff;
+        }
+
+        /* 🌍 HERO */
+        .hero {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1974') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), black);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ⚡ GLITCH */
+        .glitch {
+            font-size: 48px;
+            text-shadow: 0 0 10px #b026ff;
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 0 #b026ff;
+            }
+
+            25% {
+                text-shadow: -2px 0 #ff00ff;
+            }
+
+            50% {
+                text-shadow: 2px 0 #b026ff;
+            }
+
+            75% {
+                text-shadow: -2px 0 #ff00ff;
+            }
+
+            100% {
+                text-shadow: 2px 0 #b026ff;
+            }
+        }
+
+        .subtext {
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            background: none;
+            border: 1px solid #b026ff;
+            color: #b026ff;
+            padding: 12px 24px;
+            margin: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            box-shadow: 0 0 20px #b026ff;
+            transform: translateY(-3px);
+        }
+
+        section {
+            padding: 100px 10%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 40px;
+            color: #b026ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .poster {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), black);
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 120px;
+            left: 10%;
+            z-index: 2;
+        }
+
+        .caption h1 {
+            font-size: 48px;
+            color: #b026ff;
+        }
+
+        .news-section {
+            padding: 80px 0;
+            background: black;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #b026ff;
+            font-size: 28px;
+            margin-bottom: 40px;
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 30px;
+            width: max-content;
+            animation: scroll-left 35s linear infinite;
+        }
+
+        .news-card {
+            min-width: 320px;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-text">Loading Zyphora...</div>
+    </div>
+
+    <div class="navbar">
+        <div class="logo">Zyphora</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="space.html">Space</a>
+            <a href="games.html">Games</a>
+            <a href="3dd.html">3D</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <div class="hero" id="home">
+        <div class="hero-content">
+            <div class="glitch">Explore The Universe</div>
+            <div class="subtext">
+                Discover satellites, planetary systems, and the science shaping our cosmos.
+            </div>
+            <div class="hero-buttons">
+                <button onclick="window.location.href='space.html'">Explore Space</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="poster">
+        <div class="slides">
+            <div class="slide active">
+                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1974">
+                <div class="caption">
+                    <h1>Explore The Universe</h1>
+                    <p>Immersive Space Learning Experience</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1462332420958-a05d1e002413?q=80&w=1974">
+                <div class="caption">
+                    <h1>Cosmic Discoveries</h1>
+                    <p>Journey Beyond Imagination</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-section">
+        <h2 class="section-title">Latest News</h2>
+
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+
+                <div class="news-card">
+                    <img src="https://github.com/abuthaheer29/universec/blob/main/947487_maxresdefault.webp?raw=true">
+                </div>
+
+                <div class="news-card">
+                    <img src="https://github.com/abuthaheer29/universec/blob/main/image.webp?raw=true">
+                </div>
+
+                <div class="news-card">
+                    <img src="https://github.com/abuthaheer29/universec/blob/main/maxresdefault%20(2).jpg?raw=true">
+                </div>
+
+                <!-- DUPLICATE SAFE -->
+                <div class="news-card">
+                    <img src="https://github.com/abuthaheer29/universec/blob/main/947487_maxresdefault.webp?raw=true">
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- 🌱 3D -->
+    <section id="threeD">
+        <h2>3D Solar System</h2>
+
+        <div class="solar">
+            <a href="3dd.html" class="enter-btn">
+                Enter 3D World 🚀
+            </a>
+        </div>
+    </section>
+    <script>
+        window.onload = () => {
+            setTimeout(() => loader.style.display = "none", 1200);
+        }
+
+        const slides = document.querySelectorAll('.slide');
+        let index = 0;
+
+        function changeSlide() {
+            slides[index].classList.remove('active');
+            index = (index + 1) % slides.length;
+            slides[index].classList.add('active');
+        }
+
+        setInterval(changeSlide, 3500);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universec • Space</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🔥 RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🔥 Animated Glow Layer */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
+            filter: blur(60px);
+            animation: cosmicMove 12s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes cosmicMove {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(30px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(30px) translateX(-25px) scale(1);
+            }
+        }
+
+        /* ✅ NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(176, 38, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 22px;
+            color: #b026ff;
+            text-shadow: 0 0 10px #b026ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b026ff;
+        }
+
+        /* ✅ CONTENT */
+        .container {
+            padding: 120px 10% 40px;
+        }
+
+        h1 {
+            color: #b026ff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* ✅ MINI NAV */
+        .mini-nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            justify-content: center;
+        }
+
+        .mini-nav button {
+            background: none;
+            border: 1px solid #b026ff;
+            color: #b026ff;
+            padding: 10px 22px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .mini-nav button.active,
+        .mini-nav button:hover {
+            background: #b026ff;
+            color: black;
+        }
+
+        /* ✅ GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        /* ✅ CARD */
+        .card {
+            height: 260px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.35s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.7);
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .card:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card p {
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* ✅ POPUP */
+        .popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-content {
+            width: 500px;
+            background: black;
+            border: 1px solid #b026ff;
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .popup-content img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .popup-content h2 {
+            color: #b026ff;
+            margin-bottom: 10px;
+        }
+
+        .popup-content p {
+            opacity: 0.7;
+            white-space: pre-line;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #b026ff;
+        }
+
+        iframe {
+            border-radius: 10px;
+        }
+
+        /* 🔥 LIVE PLAYER */
+        .live-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-top: 20px;
+
+            border: 1px solid rgba(176, 38, 255, 0.4);
+
+            box-shadow:
+                0 0 40px rgba(176, 38, 255, 0.25),
+                inset 0 0 25px rgba(176, 38, 255, 0.15);
+        }
+
+        .live-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 🔥 Overlay */
+        .live-overlay {
+            position: absolute;
+            inset: 0;
+
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, 0.85),
+                    rgba(0, 0, 0, 0.2));
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+        }
+
+        /* 🔴 LIVE Badge */
+        .live-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+
+            background: red;
+            color: white;
+
+            padding: 6px 14px;
+            border-radius: 30px;
+
+            font-size: 12px;
+            letter-spacing: 1px;
+
+            box-shadow: 0 0 15px red;
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0% {
+                box-shadow: 0 0 10px red;
+            }
+
+            50% {
+                box-shadow: 0 0 25px red;
+            }
+
+            100% {
+                box-shadow: 0 0 10px red;
+            }
+        }
+
+        /* Text */
+        .live-overlay h2 {
+            color: #b026ff;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .live-overlay p {
+            opacity: 0.6;
+            font-size: 13px;
+        }
+
+        .live-overlay {
+            pointer-events: none;
+        }
+
+        .live-video {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            /* 🔥 16:9 Ratio */
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .live-video iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">Zyphora</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="space.html">Space</a>
+            <a href="games.html">Games</a>
+            <a href="3dd.html">3D</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1>Space Exploration</h1>
+
+        <div class="mini-nav">
+            <button class="active" onclick="showSection('planets', this)">Planets</button>
+            <button onclick="showSection('news', this)">News</button>
+            <button onclick="showSection('satellites', this)">Satellites</button>
+            <button onclick="showSection('astronauts', this)">Astronauts</button>
+            <button onclick="showSection('live', this)">Live</button>
+        </div>
+
+        <!-- ✅ PLANETS -->
+        <div class="grid" id="planets">
+
+            <div class="card" onclick="openPopup('Mercury','https://github.com/abuthaheer29/universec/blob/main/mercury%20.jpg?raw=true',
+'Distance: 57.9M km\nRadius: 2,439 km\nDay Length: 58.6 Earth days')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/mercury%20.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Mercury</h3>
+                    <p>Closest Planet</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Venus','https://github.com/abuthaheer29/universec/blob/main/fiery-planet-universe.jpg?raw=true',
+'Distance: 108.2M km\nRadius: 6,051 km\nFact: Hottest planet')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/fiery-planet-universe.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Venus</h3>
+                    <p>Extreme Heat</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Earth','https://github.com/abuthaheer29/universec/blob/main/3d-rendering-planet-earth.jpg?raw=true',
+'Distance: 149.6M km\nRadius: 6,371 km\nFact: Supports Life')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/3d-rendering-planet-earth.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Earth</h3>
+                    <p>Our Home</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Mars','https://github.com/abuthaheer29/universec/blob/main/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png?raw=true',
+'Distance: 227.9M km\nRadius: 3,389 km\nFact: Red Planet')">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png?raw=true">
+                <div class="card-content">
+                    <h3>Mars</h3>
+                    <p>Exploration Target</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Jupiter','https://github.com/abuthaheer29/universec/blob/main/Jupiter_OPAL_2024.png?raw=true',
+'Distance: 778.5M km\nRadius: 69,911 km\nFact: Largest Planet')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/Jupiter_OPAL_2024.png?raw=true">
+                <div class="card-content">
+                    <h3>Jupiter</h3>
+                    <p>Gas Giant</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Saturn','https://github.com/abuthaheer29/universec/blob/main/planet-saturn-real.dim_512x512.png?raw=true',
+'Distance: 1.4B km\nFact: Iconic Rings')">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/planet-saturn-real.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Saturn</h3>
+                    <p>Ringed Planet</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Uranus','https://github.com/abuthaheer29/universec/blob/main/p0257vk5.jpg?raw=true',
+'Distance: 2.9B km\nFact: Rotates sideways')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/p0257vk5.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Uranus</h3>
+                    <p>Ice Giant</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup('Neptune','https://github.com/abuthaheer29/universec/blob/main/neptune.jpg?raw=true',
+'Distance: 4.5B km\nFact: Strongest winds')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/neptune.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Neptune</h3>
+                    <p>Deep Blue World</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ✅ NEWS -->
+        <div class="grid" id="news" style="display:none;">
+
+            <div class="card" onclick="openVideo('Moon Mission','https://www.youtube.com/embed/0EqTKYA78x8')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/bbc%201.avif?raw=true">
+                <div class="card-content">
+                    <h3>Moon Mission</h3>
+                    <p>Historic footage</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('ISS Update','https://www.youtube.com/embed/SfbudeLxg6k')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/bbc3.webp?raw=true">
+                <div class="card-content">
+                    <h3>ISS Update</h3>
+                    <p>Mission report</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('Mars Exploration','https://www.youtube.com/embed/4czjS9h4Fpg')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/image.webp?raw=true">
+                <div class="card-content">
+                    <h3>Mars Exploration</h3>
+                    <p>Latest discoveries</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('BAAHUBALI Satellite','https://www.youtube.com/embed/BH5HNCXzdX8')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/bcc5.avif?raw=true">
+                <div class="card-content">
+                    <h3>BAAHUBALI Satellite</h3>
+                    <p>Indian Mission</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('Rocket Launch','https://www.youtube.com/embed/yemQjpTIU1k')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news%201.avif?raw=true">
+                <div class="card-content">
+                    <h3>Rocket Launch</h3>
+                    <p>Launch sequence</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('Spacewalk','https://www.youtube.com/embed/TCacQdybXkw')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news4.avif?raw=true">
+                <div class="card-content">
+                    <h3>Spacewalk</h3>
+                    <p>ISS EVA footage</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('Deep Space Signals','https://www.youtube.com/embed/l0X_-MwtqyA')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news2.avif?raw=true">
+                <div class="card-content">
+                    <h3>Deep Space Signals</h3>
+                    <p>Scientific analysis</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openVideo('Future Missions','https://www.youtube.com/embed/1ozN_0gYTBk')">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news3.avif?raw=true">
+                <div class="card-content">
+                    <h3>Future Missions</h3>
+                    <p>Next-gen exploration</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ✅ SATELLITES -->
+        <div class="grid" id="satellites" style="display:none;">
+
+            <div class="card" onclick="openPopup(
+'Hubble Space Telescope',
+'https://github.com/abuthaheer29/universec/blob/main/istockphoto-182062885-612x612.jpg?raw=true',
+'Type: Observational Telescope\nLaunch Year: 1990\nMission: Deep space imaging & discoveries'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/istockphoto-182062885-612x612.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Hubble Telescope</h3>
+                    <p>Space Observatory</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'GPS Satellite System',
+'https://github.com/abuthaheer29/universec/blob/main/gps-satellite.jpeg?raw=true',
+'Type: Navigation Satellite\nFunction: Global Positioning System\nUse: Mapping, tracking, navigation'
+)">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/gps-satellite.jpeg?raw=true">
+                <div class="card-content">
+                    <h3>GPS Satellite</h3>
+                    <p>Navigation System</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Communication Satellite',
+'https://github.com/abuthaheer29/universec/blob/main/communication-satellite.jpeg?raw=true',
+'Type: Communication Satellite\nPurpose: Signal transmission\nUse: TV, Internet, Global connectivity'
+)">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/communication-satellite.jpeg?raw=true">
+                <div class="card-content">
+                    <h3>Communication Satellite</h3>
+                    <p>Connectivity</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Weather Monitoring Satellite',
+'https://github.com/abuthaheer29/universec/blob/main/weather-satellite.jpg?raw=true',
+'Type: Weather Satellite\nPurpose: Climate observation\nUse: Forecasting & storm tracking'
+)">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/weather-satellite.jpg?raw=true">
+                <div class="card-content">
+                    <h3>Weather Satellite</h3>
+                    <p>Climate Tracking</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ✅ ASTRONAUTS -->
+        <div class="grid" id="astronauts" style="display:none;">
+
+            <div class="card" onclick="openPopup(
+'Neil Armstrong',
+'https://github.com/abuthaheer29/universec/blob/main/neil-armstrong.png?raw=true',
+'Mission: Apollo 11\nAchievement: First Human on Moon\nAwards: Presidential Medal of Freedom'
+)">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/neil-armstrong.png?raw=true">
+                <div class="card-content">
+                    <h3>Neil Armstrong</h3>
+                    <p>Moon Pioneer</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Kalpana Chawla',
+'https://github.com/abuthaheer29/universec/blob/main/astronaut-kalpana-chawla.dim_512x512.png?raw=true',
+'Mission: Space Shuttle Columbia\nAchievement: First Indian-born Woman in Space\nAwards: Congressional Space Medal'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/astronaut-kalpana-chawla.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Kalpana Chawla</h3>
+                    <p>Space Explorer</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Chris Hadfield',
+'https://github.com/abuthaheer29/universec/blob/main/astronaut-chris-hadfield.dim_512x512.png?raw=true',
+'Mission: ISS Commander\nAchievement: Science Communication Icon\nAwards: Order of Canada'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/astronaut-chris-hadfield.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Chris Hadfield</h3>
+                    <p>ISS Commander</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Rakesh Sharma',
+'https://github.com/abuthaheer29/universec/blob/main/astronaut-rakesh-sharma.dim_512x512.png?raw=true',
+'Mission: Soyuz T-11\nAchievement: First Indian in Space\nAwards: Ashoka Chakra'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/astronaut-rakesh-sharma.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Rakesh Sharma</h3>
+                    <p>Indian Space Hero</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Sally Ride',
+'https://github.com/abuthaheer29/universec/blob/main/astronaut-sally-ride.dim_512x512.png?raw=true',
+'Mission: Space Shuttle Challenger\nAchievement: First American Woman in Space\nAwards: NASA Space Flight Medal'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/astronaut-sally-ride.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Sally Ride</h3>
+                    <p>Trailblazer</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openPopup(
+'Yuri Gagarin',
+'https://github.com/abuthaheer29/universec/blob/main/astronaut-yuri-gagarin.dim_512x512.png?raw=true',
+'Mission: Vostok 1\nAchievement: First Human in Space\nAwards: Hero of the Soviet Union'
+)">
+                <img
+                    src="https://github.com/abuthaheer29/universec/blob/main/astronaut-yuri-gagarin.dim_512x512.png?raw=true">
+                <div class="card-content">
+                    <h3>Yuri Gagarin</h3>
+                    <p>First Human in Space</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ✅ POPUPS -->
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <div class="close" onclick="closePopup()">✕</div>
+                <img id="popupImg">
+                <h2 id="popupTitle"></h2>
+                <p id="popupText"></p>
+            </div>
+        </div>
+
+        <div class="popup" id="videoPopup">
+            <div class="popup-content">
+                <div class="close" onclick="closeVideo()">✕</div>
+                <iframe id="newsVideo" width="100%" height="280" src=""></iframe>
+                <h2 id="videoTitle"></h2>
+            </div>
+
+        </div>
+        <!-- ✅ LIVE -->
+        <div class="grid" id="live" style="display:none;">
+
+            <div class="live-container">
+
+                <div class="live-video">
+                    <iframe src="https://www.youtube.com/embed/TZ_qrncuHV0" allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="live-overlay">
+                    <div class="live-badge">🔴 LIVE</div>
+                    <h2>Earth From Space</h2>
+                    <p>NASA ISS Live Stream</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    </div>
+    <script>
+
+        function showSection(id, btn) {
+            document.querySelectorAll('.grid').forEach(sec => sec.style.display = 'none');
+            document.getElementById(id).style.display = 'grid';
+            document.querySelectorAll('.mini-nav button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function openPopup(title, img, text) {
+            popupTitle.innerText = title;
+            popupImg.src = img;
+            popupText.innerText = text;
+            popup.style.display = "flex";
+        }
+
+        function closePopup() {
+            popup.style.display = "none";
+        }
+
+        function openVideo(title, url) {
+            newsVideo.src = url + "?autoplay=1";
+            videoTitle.innerText = title;
+            videoPopup.style.display = "flex";
+        }
+
+        function closeVideo() {
+            newsVideo.src = "";
+            videoPopup.style.display = "none";
+        }
+
+    </script>
+
+</body>
+
+</html>

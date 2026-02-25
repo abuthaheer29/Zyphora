@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universec • Certificates</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- ✅ jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <!-- ✅ html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
+            filter: blur(60px);
+            animation: cosmicMove 12s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes cosmicMove {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(30px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(30px) translateX(-25px) scale(1);
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(176, 38, 255, 0.3);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            color: #b026ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links a:hover {
+            color: #b026ff;
+        }
+
+        .container {
+            padding: 120px 10%;
+        }
+
+        h1 {
+            color: #b026ff;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 20px #b026ff;
+        }
+
+        .popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-content {
+            width: 650px;
+            background: black;
+            border: 1px solid #b026ff;
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: #b026ff;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .name-box {
+            display: none;
+            margin-top: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            border: 1px solid #b026ff;
+            color: white;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #b026ff;
+            border: none;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+        }
+
+        #certificatePreview {
+            display: none;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .certificate {
+            width: 794px;
+            height: 1123px;
+            margin: auto;
+            position: relative;
+            background: white;
+        }
+
+        .certificate img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cert-name {
+            position: absolute;
+            top: 49%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            font-weight: bold;
+            color: black;
+            font-family: 'Times New Roman', serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">Zyphora</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="space.html">Space</a>
+            <a href="games.html">Games</a>
+            <a href="3dd.html">3D</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1>Professional Certifications</h1>
+
+        <div class="grid">
+
+            <div class="card" onclick="openVideo('Rocket Education')">
+                <img src="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?q=80&w=1974">
+                <h3>Rocket Education</h3>
+                <p>Launch physics & systems</p>
+            </div>
+
+            <div class="card" onclick="openVideo('Solar System')">
+                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1974">
+                <h3>Solar System</h3>
+                <p>Planetary science</p>
+            </div>
+
+            <div class="card" onclick="openVideo('Satellite Technology')">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1974">
+                <h3>Satellite Technology</h3>
+                <p>Orbital mechanics</p>
+            </div>
+
+            <div class="card" onclick="openVideo('Galaxy Exploration')">
+                <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1974">
+                <h3>Galaxy Exploration</h3>
+                <p>Deep space research</p>
+            </div>
+
+        </div>
+
+        <!-- ✅ VIDEO POPUP -->
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <div class="close" onclick="closePopup()">✕</div>
+
+                <!-- ✅ DUMMY VIDEO -->
+                <video id="video" width="100%" controls>
+                    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+                </video>
+
+                <div class="name-box" id="nameBox">
+                    <p>Enter Your Name</p>
+                    <input type="text" id="userName" placeholder="Your Name">
+                    <button onclick="showCertificate()">Generate Certificate</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ✅ CERTIFICATE -->
+        <div id="certificatePreview">
+
+            <div class="certificate" id="certificate">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/space%20certificate.png?raw=true">
+                <div class="cert-name" id="certName"></div>
+            </div>
+
+            <button onclick="downloadPDF()">Download PDF</button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const courseVideos = {
+
+            "Rocket Education": "https://www.w3schools.com/html/mov_bbb.mp4",
+
+            "Solar System": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+
+            "Satellite Technology": "https://www.w3schools.com/html/movie.mp4",
+
+            "Galaxy Exploration": "https://media.w3.org/2010/05/sintel/trailer.mp4"
+        };
+
+        let currentCourse = '';
+
+        function openVideo(course) {
+
+            popup.style.display = 'flex';
+
+            video.pause();
+            video.currentTime = 0;
+
+            video.src = courseVideos[course];
+
+            video.load();
+            video.play();
+
+            nameBox.style.display = 'none';
+
+            currentCourse = course;
+        }
+
+        video.addEventListener('ended', () => {
+            nameBox.style.display = 'block';
+        });
+
+        function closePopup() {
+            popup.style.display = 'none';
+            video.pause();
+        }
+
+        function showCertificate() {
+
+            const name = userName.value.trim();
+
+            if (!name) {
+                alert("Enter Name");
+                return;
+            }
+
+            certName.innerText = name;
+
+            certificatePreview.style.display = 'block';
+
+            closePopup();
+        }
+
+        async function downloadPDF() {
+
+            const { jsPDF } = window.jspdf;
+
+            const cert = document.getElementById("certificate");
+
+            const canvas = await html2canvas(cert, {
+                scale: 2,
+                useCORS: true
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+
+            pdf.save("Universec-Certificate.pdf");
+        }
+
+    </script>
+
+</body>
+
+</html>

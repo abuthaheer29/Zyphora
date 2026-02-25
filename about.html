@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Universec • About</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🔥 RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🔥 Animated Glow Layer */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
+            filter: blur(60px);
+            animation: cosmicMove 12s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes cosmicMove {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-40px) translateX(30px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(30px) translateX(-25px) scale(1);
+            }
+        }
+
+        /* ✅ NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(176, 38, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 22px;
+            color: #b026ff;
+            text-shadow: 0 0 10px #b026ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b026ff;
+        }
+
+        /* ✅ CONTENT */
+        .container {
+            padding: 120px 10% 80px;
+        }
+
+        h1 {
+            color: #b026ff;
+            margin-bottom: 40px;
+        }
+
+        /* ✅ SECTIONS */
+        .block {
+            margin-bottom: 60px;
+        }
+
+        .block h2 {
+            color: #b026ff;
+            margin-bottom: 15px;
+        }
+
+        .block p {
+            opacity: 0.7;
+            line-height: 1.7;
+        }
+
+        /* ✅ IMAGE SECTIONS */
+        .section {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .section img {
+            width: 380px;
+            border-radius: 12px;
+        }
+
+        /* ✅ LISTS */
+        ul {
+            opacity: 0.7;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* 🔥 RESPONSIVE */
+        @media(max-width:900px) {
+            .section {
+                flex-direction: column;
+            }
+
+            .section img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ✅ NAVBAR -->
+    <div class="navbar">
+        <div class="logo">Zyphora</div>
+
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="space.html">Space</a>
+            <a href="games.html">Games</a>
+            <a href="3dd.html">3D</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1>About Universec</h1>
+
+        <!-- ✅ PROJECT OVERVIEW -->
+        <div class="block">
+            <h2>Project Overview</h2>
+            <p>
+                Universec is a futuristic web-based educational platform developed as a final-year project
+                to demonstrate modern web technologies, interactive user interfaces, and immersive
+                visualization techniques. The project focuses on presenting space science concepts
+                through structured design, dynamic components, and engaging visual elements.
+            </p>
+        </div>
+
+        <!-- ✅ MISSION -->
+        <div class="block">
+            <h2>Our Mission</h2>
+
+            <div class="section">
+                <img src="https://images.unsplash.com/photo-1462332420958-a05d1e002413?q=80&w=1974">
+
+                <p>
+                    The mission of Universec is to create an intuitive and visually immersive learning
+                    environment that enhances user engagement and conceptual understanding of space
+                    exploration. By integrating interactive modules and modern design principles,
+                    the platform transforms static educational content into an experiential digital interface.
+                </p>
+            </div>
+        </div>
+
+        <!-- ✅ VISION -->
+        <div class="block">
+            <h2>Our Vision</h2>
+
+            <div class="section">
+                <p>
+                    Universec envisions a next-generation educational ecosystem where learners can
+                    explore complex scientific topics through interactive visualization, structured
+                    UI components, and seamless digital experiences. The platform aims to inspire
+                    curiosity, innovation, and deeper academic exploration.
+                </p>
+
+                <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=1974">
+            </div>
+        </div>
+
+        <!-- ✅ OBJECTIVES -->
+        <div class="block">
+            <h2>Project Objectives</h2>
+            <ul>
+                <li>To design a futuristic and visually engaging web interface.</li>
+                <li>To implement modular UI architecture with dynamic components.</li>
+                <li>To provide structured informational visualization.</li>
+                <li>To integrate interactive user experience principles.</li>
+                <li>To demonstrate real-world web development practices.</li>
+            </ul>
+        </div>
+
+        <!-- ✅ TECHNOLOGIES -->
+        <div class="block">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>HTML for structural layout design.</li>
+                <li>CSS for styling and futuristic theme implementation.</li>
+                <li>JavaScript for dynamic interactions and UI logic.</li>
+                <li>Three.js for 3D visualization modules.</li>
+            </ul>
+        </div>
+
+        <!-- ✅ FEATURES -->
+        <div class="block">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Neon-themed futuristic user interface.</li>
+                <li>Card-based informational modules.</li>
+                <li>Popup-based detailed visualization.</li>
+                <li>Interactive 3D solar system.</li>
+                <li>Structured navigation system.</li>
+            </ul>
+        </div>
+
+        <!-- ✅ FUTURE -->
+        <div class="block">
+            <h2>Future Enhancements</h2>
+            <ul>
+                <li>Real-time space data integration.</li>
+                <li>Advanced 3D planetary textures.</li>
+                <li>Interactive simulations.</li>
+                <li>User personalization modules.</li>
+                <li>Extended educational content.</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
