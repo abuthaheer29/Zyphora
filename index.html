@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Universec</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -18,101 +19,7 @@
         body {
             background: black;
             color: white;
-            position: relative;
             overflow-x: hidden;
-        }
-
-        /* 🔥 Animated Glow Layer */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(176, 38, 255, 0.25), transparent 25%),
-                radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.18), transparent 30%),
-                radial-gradient(circle at 40% 80%, rgba(176, 38, 255, 0.22), transparent 28%);
-            filter: blur(60px);
-            animation: cosmicMove 12s ease-in-out infinite alternate;
-            z-index: -1;
-        }
-
-        @keyframes cosmicMove {
-            0% {
-                transform: translateY(0) translateX(0) scale(1);
-            }
-
-            50% {
-                transform: translateY(-40px) translateX(30px) scale(1.1);
-            }
-
-            100% {
-                transform: translateY(30px) translateX(-25px) scale(1);
-            }
-        }
-
-        .enter-btn {
-            display: inline-block;
-            padding: 18px 40px;
-            font-size: 18px;
-            color: #b026ff;
-
-            border: 1px solid rgba(176, 38, 255, 0.6);
-            text-decoration: none;
-
-            border-radius: 12px;
-
-            background: rgba(176, 38, 255, 0.05);
-
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 🔥 Soft glow aura */
-        .enter-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-
-            background: linear-gradient(120deg,
-                    transparent,
-                    rgba(176, 38, 255, 0.25),
-                    transparent);
-
-            opacity: 0;
-            transition: 0.35s;
-        }
-
-        /* 🔥 Hover magic */
-        .enter-btn:hover {
-            background: #b026ff;
-            color: black;
-
-            box-shadow:
-                0 0 12px #b026ff,
-                0 0 25px rgba(176, 38, 255, 0.8);
-
-            transform: translateY(-3px) scale(1.03);
-        }
-
-        /* 🔥 Glow sweep */
-        .enter-btn:hover::before {
-            opacity: 1;
-            animation: glowSweep 1.2s linear infinite;
-        }
-
-        /* 🔥 Click effect */
-        .enter-btn:active {
-            transform: scale(0.97);
-        }
-
-        @keyframes glowSweep {
-            from {
-                transform: translateX(-100%);
-            }
-
-            to {
-                transform: translateX(100%);
-            }
         }
 
         /* 🌌 LOADER */
@@ -260,6 +167,7 @@
             transform: translateY(-3px);
         }
 
+        /* ✨ SECTIONS */
         section {
             padding: 100px 10%;
             text-align: center;
@@ -270,6 +178,7 @@
             color: #b026ff;
         }
 
+        /* 🧊 CARDS */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -284,11 +193,103 @@
             margin-bottom: 15px;
         }
 
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
         .card:hover {
             box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
             transform: translateY(-5px);
         }
 
+        /* 🎞 SLIDER */
+        .slider {
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .slider img {
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        /* 🌱 3D */
+        .solar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .planet {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #b026ff;
+            box-shadow: 0 0 20px #b026ff;
+            cursor: pointer;
+        }
+
+        /* 🌍 MODAL */
+        .modal {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: black;
+            padding: 30px;
+            border: 1px solid #b026ff;
+        }
+
+        #threeD {
+            padding: 80px 10%;
+            text-align: center;
+            background: black;
+        }
+
+        #threeD h2 {
+            color: #b026ff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #b026ff;
+        }
+
+        .solar {
+            margin-top: 20px;
+        }
+
+        /* 🚀 ENTER BUTTON */
+        .enter-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 18px;
+            color: #b026ff;
+            border: 1px solid #b026ff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+            background: rgba(176, 38, 255, 0.05);
+        }
+
+        .enter-btn:hover {
+            background: #b026ff;
+            color: black;
+            box-shadow: 0 0 30px #b026ff;
+            transform: scale(1.05);
+        }
+
+        /* 🌌 POSTER */
         .poster {
             height: 100vh;
             position: relative;
@@ -319,6 +320,7 @@
             object-fit: cover;
         }
 
+        /* 🌠 OVERLAY */
         .slide::after {
             content: '';
             position: absolute;
@@ -326,6 +328,7 @@
             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), black);
         }
 
+        /* ✨ TEXT */
         .caption {
             position: absolute;
             bottom: 120px;
@@ -336,19 +339,25 @@
         .caption h1 {
             font-size: 48px;
             color: #b026ff;
+            text-shadow: 0 0 15px #b026ff;
+        }
+
+        .caption p {
+            margin-top: 10px;
+            opacity: 0.7;
+            font-size: 18px;
         }
 
         .news-section {
-            padding: 80px 0;
+            padding: 60px 10%;
             background: black;
             overflow: hidden;
         }
 
-        .section-title {
-            text-align: center;
+        .news-section h2 {
             color: #b026ff;
-            font-size: 28px;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #b026ff;
         }
 
         .marquee-wrapper {
@@ -358,25 +367,25 @@
 
         .marquee-track {
             display: flex;
-            gap: 30px;
+            gap: 25px;
             width: max-content;
-            animation: scroll-left 35s linear infinite;
+            animation: scroll 25s linear infinite;
         }
 
-        .news-card {
-            min-width: 320px;
+        .marquee-track img {
+            width: 320px;
             height: 180px;
-            border-radius: 14px;
-            overflow: hidden;
-        }
-
-        .news-card img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        @keyframes scroll-left {
+        .marquee-track img:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes scroll {
             from {
                 transform: translateX(0);
             }
@@ -390,14 +399,17 @@
 
 <body>
 
+    <!-- 🌌 LOADER -->
     <div id="loader">
         <div class="loader-text">Loading Zyphora...</div>
     </div>
 
+    <!-- ✅ NAVBAR -->
     <div class="navbar">
         <div class="logo">Zyphora</div>
+
         <div class="nav-links">
-            <a href="index.html">Home</a>
+            <a href="home.html">Home</a>
             <a href="space.html">Space</a>
             <a href="games.html">Games</a>
             <a href="3dd.html">3D</a>
@@ -406,6 +418,7 @@
         </div>
     </div>
 
+    <!-- 🌍 HERO -->
     <div class="hero" id="home">
         <div class="hero-content">
             <div class="glitch">Explore The Universe</div>
@@ -413,18 +426,20 @@
                 Discover satellites, planetary systems, and the science shaping our cosmos.
             </div>
             <div class="hero-buttons">
-                <button onclick="window.location.href='space.html'">Explore Space</button>
+                <button onclick="scrollToSection('space')">Explore Space</button>
             </div>
         </div>
     </div>
-
     <section class="poster">
+
         <div class="slides">
+
             <div class="slide active">
                 <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1974">
                 <div class="caption">
                     <h1>Explore The Universe</h1>
-                    <p>Immersive Space Learning Experience</p>
+                    <p>Step into a limitless cosmic journey filled with discovery, knowledge, and breathtaking celestial
+                        visuals.</p>
                 </div>
             </div>
 
@@ -432,40 +447,87 @@
                 <img src="https://images.unsplash.com/photo-1462332420958-a05d1e002413?q=80&w=1974">
                 <div class="caption">
                     <h1>Cosmic Discoveries</h1>
-                    <p>Journey Beyond Imagination</p>
+                    <p>Witness the beauty of distant galaxies, stellar explosions, and the mysteries shaping our vast
+                        universe.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="news-section">
-        <h2 class="section-title">Latest News</h2>
-
-        <div class="marquee-wrapper">
-            <div class="marquee-track">
-
-                <div class="news-card">
-                    <img src="https://github.com/abuthaheer29/universec/blob/main/947487_maxresdefault.webp?raw=true">
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=1974">
+                <div class="caption">
+                    <h1>Interactive 3D Worlds</h1>
+                    <p>Experience space like never before through immersive environments designed for exploration and
+                        learning.</p>
                 </div>
-
-                <div class="news-card">
-                    <img src="https://github.com/abuthaheer29/universec/blob/main/image.webp?raw=true">
-                </div>
-
-                <div class="news-card">
-                    <img src="https://github.com/abuthaheer29/universec/blob/main/maxresdefault%20(2).jpg?raw=true">
-                </div>
-
-                <!-- DUPLICATE SAFE -->
-                <div class="news-card">
-                    <img src="https://github.com/abuthaheer29/universec/blob/main/947487_maxresdefault.webp?raw=true">
-                </div>
-
             </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=1974">
+                <div class="caption">
+                    <h1>Beyond The Stars</h1>
+                    <p>Dive deeper into the unknown regions of space where imagination meets cutting-edge scientific
+                        understanding.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=1974">
+                <div class="caption">
+                    <h1>The Future Of Exploration</h1>
+                    <p>Discover how modern technology, satellites, and missions are redefining humanity’s presence in
+                        space.</p>
+                </div>
+            </div>
+
         </div>
+
     </section>
+
+    <!-- 🔥 NEWS -->
+    <div class="marquee-wrapper">
+        <div class="marquee-track">
+
+            <a href="https://www.youtube.com/watch?v=0EqTKYA78x8" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/bbc%201.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/D8H1RNtka6s?si=UO6Oyh7b2WJmuE0c" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news4.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/ZxPVwzu-fbs?si=NbD8_1-CzblDUyCu" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/bcc5.avif?raw=true">
+            </a>
+            <a href="https://www.youtube.com/watch?v=0EqTKYA78x8" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news2.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/D8H1RNtka6s?si=UO6Oyh7b2WJmuE0c" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news5.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/ZxPVwzu-fbs?si=NbD8_1-CzblDUyCu" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news3.avif?raw=true">
+            </a>
+            <!-- 🔥 DUPLICATE FOR SMOOTH LOOP -->
+            <a href="https://www.youtube.com/watch?v=0EqTKYA78x8" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news2.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/D8H1RNtka6s?si=UO6Oyh7b2WJmuE0c" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news5.avif?raw=true">
+            </a>
+
+            <a href="https://youtu.be/ZxPVwzu-fbs?si=NbD8_1-CzblDUyCu" target="_blank">
+                <img src="https://github.com/abuthaheer29/universec/blob/main/news3.avif?raw=true">
+            </a>
+
+        </div>
+    </div>
+
     <!-- 🌱 3D -->
     <section id="threeD">
+
         <h2>3D Solar System</h2>
 
         <div class="solar">
@@ -473,10 +535,17 @@
                 Enter 3D World 🚀
             </a>
         </div>
+
     </section>
+
     <script>
+
+        /* 🔥 LOADER */
         window.onload = () => {
             setTimeout(() => loader.style.display = "none", 1200);
+        }
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
         const slides = document.querySelectorAll('.slide');
@@ -489,6 +558,8 @@
         }
 
         setInterval(changeSlide, 3500);
+
+
     </script>
 
 </body>
