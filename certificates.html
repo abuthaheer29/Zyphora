@@ -206,6 +206,44 @@
             color: black;
             font-family: 'Times New Roman', serif;
         }
+
+        .yt-mini-section {
+            padding: 70px 10%;
+            background: black;
+        }
+
+        .yt-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 🔥 ALWAYS 4 */
+            gap: 25px;
+        }
+
+        .yt-card {
+            background: #111;
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.25);
+            transition: 0.3s;
+        }
+
+        .yt-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 35px rgba(176, 38, 255, 0.5);
+        }
+
+        .yt-card iframe {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+        }
+
+        .yt-card p {
+            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0.7;
+            color: white;
+        }
     </style>
 </head>
 
@@ -214,7 +252,7 @@
     <div class="navbar">
         <div class="logo">Zyphora</div>
         <div class="nav-links">
-            <a href="index.html">Home</a>
+            <a href="home.html">Home</a>
             <a href="space.html">Space</a>
             <a href="games.html">Games</a>
             <a href="3dd.html">3D</a>
@@ -273,7 +311,43 @@
 
             </div>
         </div>
+        <section class="yt-mini-section">
 
+            <h2 class="section-title">Learning Highlights</h2>
+
+            <div class="yt-grid">
+
+                <div class="yt-card">
+                    <iframe src="https://www.youtube.com/embed/1yBwWLunlOM" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                    <p>Rocket Science Fundamentals</p>
+                </div>
+
+                <div class="yt-card">
+                    <iframe src="https://www.youtube.com/embed/HE3a_bmEHyo" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                    <p>Understanding Orbital Mechanics</p>
+                </div>
+
+                <div class="yt-card">
+                    <iframe src="https://www.youtube.com/embed/pSHVbLPWA28" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                    <p>Deep Space Exploration Concepts</p>
+                </div>
+
+                <div class="yt-card">
+                    <iframe src="https://www.youtube.com/embed/n70zjMvm8L0" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                    <p>Satellite Technology Explained</p>
+                </div>
+
+            </div>
+
+        </section>
         <!-- ✅ CERTIFICATE -->
         <div id="certificatePreview">
 
